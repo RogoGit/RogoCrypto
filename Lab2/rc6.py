@@ -75,7 +75,6 @@ def rc6_block_encrypt(block, block_size_bytes, S):
 # main rc6 decoding func - getting block and return decoded block
 # S[0... 2r+3] - key tables
 def rc6_block_decrypt(block_parts, block_size_bytes, S):
-    print(block_parts)
     A = int(block_parts[0], 2)
     B = int(block_parts[1], 2)
     C = int(block_parts[2], 2)
@@ -98,7 +97,7 @@ def rc6_block_decrypt(block_parts, block_size_bytes, S):
 
     # return decrypted
     decoded = [A, B, C, D]
-    print("DEC REG:" + str(decoded))
+    # print("DEC REG:" + str(decoded))
     return get_string_from_rc6_bin(decoded, w)
 
 

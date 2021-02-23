@@ -16,7 +16,7 @@ def cfb_cipher_mode_encrypt(file_blocks, key):
     key_table = generate_key_table(key, RC6_KEY_BYTES_SIZE, BYTES_BLOCK_SIZE / 4)
     # our plain open (not encrypted) text is a list of file chunks
     P = file_blocks
-    print(P)
+    # print(P)
     # chunks of encrypted
     C = [0] * len(file_blocks)
     # blocks in cbf have j size in bits, IV size is b
@@ -25,7 +25,7 @@ def cfb_cipher_mode_encrypt(file_blocks, key):
     # encryption
     for i in range(0, len(P)):
         encrypted_iv = rc6_block_encrypt(IV, BYTES_BLOCK_SIZE, key_table)
-        print("Encr_iv " + encrypted_iv)
+        # print("Encr_iv " + encrypted_iv)
         left_bits_iv = string_to_bin_blocks(encrypted_iv, int(b/j))[0]
         C[i] = int(P[i], 2) ^ int(left_bits_iv, 2)  # converting from "11000010" str to int
         # doing left shit, replacing last j bits with C[i]
@@ -35,9 +35,9 @@ def cfb_cipher_mode_encrypt(file_blocks, key):
         c_bin = str(string_to_bin_blocks(convert_one_and_zeros_to_str(str(bin(C[i]))), 1)[0])
         iv_bin = iv_bin[:-j] + c_bin
         IV = iv_bin
-    print(C)
+    # print(C)
     final_msg = "".join(chr(i) for i in C)
-    print("ENCRYPTED_RES: " + final_msg + " " + str(len(final_msg)))
+    # print("ENCRYPTED_RES: " + final_msg + " " + str(len(final_msg)))
     return IV_orig, final_msg
 
 
@@ -58,7 +58,7 @@ def cfb_cipher_mode_decrypt(encrypted, key, IV_orig):
     # encryption
     for i in range(0, len(C)):
         encrypted_iv = rc6_block_encrypt(IV, BYTES_BLOCK_SIZE, key_table)
-        print("Decr_iv " + encrypted_iv)
+        # print("Decr_iv " + encrypted_iv)
         left_bits_iv = string_to_bin_blocks(encrypted_iv, int(b/j))[0]
         P[i] = int(C[i], 2) ^ int(left_bits_iv, 2)  # converting from "11000010" str to int
         # doing left shit, replacing last j bits with C[i]
@@ -68,7 +68,7 @@ def cfb_cipher_mode_decrypt(encrypted, key, IV_orig):
         c_bin = str(string_to_bin_blocks(convert_one_and_zeros_to_str(str(bin(int(C[i], 2)))), 1)[0])
         iv_bin = iv_bin[:-j] + c_bin
         IV = iv_bin
-    print(P)
+    # print(P)
     final_msg = "".join(chr(i) for i in P)
-    print("DECRYPTED_RES: " + final_msg)
+    # print("DECRYPTED_RES: " + final_msg)
     return final_msg
