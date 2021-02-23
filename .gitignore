@@ -1,0 +1,6 @@
+venv/
+.idea/
+**/__pycache__/
+**/decoded_file
+**/original_file
+**/encoded_file
