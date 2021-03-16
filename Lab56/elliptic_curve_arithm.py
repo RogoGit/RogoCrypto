@@ -18,3 +18,9 @@ def elliptic_curve_sum(e_curve, p1, p2):
     res_point = Point(x_res, y_res)
     return res_point
 
+
+# function to get -P(x,y) from given P(x,y)
+def elliptic_curve_point_inversion(e_curve, point):
+    res_x = point.x
+    res_y = -point.y + e_curve.p
+    return Point(res_x, res_y)
